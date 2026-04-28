@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<meta name="description" content="Bella Skills - Formation, Événements et Services Professionnels" />
+<meta name="robots" content="index, follow" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+<title>Bella Skills</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Leaflet (Map) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZvc2VX08-mtAOEnVZNA2xH8QGRGz2GbqIuMTKDh0suB-bjVIAogCm7ji820GlbHAkWWKsOg2yn3EAH7nMM_w_lvT3OH4H-UgYzsTiur_l3CzK2fcw2n_jTX1Z-t25DaLbwrY0jnDE13Zo3lrh8ZkXF5ybieZJOdpBQ4Xkr_zbn8LFS3zQDf5Bft28Zr4/s320/1000013350.png">
+
+<style>
+/* ============ RESET & BASE ============ */
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+:root {
+  --primary: #5A2D82;
+  --primary-light: #7B3FA8;
+  --primary-dark: #3F1E5C;
+  --primary-soft: #F3EBFB;
+  --white: #ffffff;
+  --black: #1a1a1a;
+  --gray: #6b7280;
+  --light-gray: #f9fafb;
+  --border: #e5e7eb;
+  --shadow: 0 4px 20px rgba(90, 45, 130, 0.08);
+  --shadow-lg: 0 10px 40px rgba(90, 45, 130, 0.15);
+  --radius: 14px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', 'Cairo', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+body[dir="rtl"] { font-family: 'Cairo', 'Poppins', sans-serif; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: inherit; }
+
+/* ============ ANIMATED BACKGROUND ============ */
+.bg-animation {
+  position: fixed; inset: 0;
+  z-index: -1; pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fdfcff 0%, #f8f3fc 100%);
+}
+.bg-animation .float-icon {
+  position: absolute;
+  color: var(--primary);
+  opacity: 0.10;
+  font-size: 32px;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.12; }
+  90% { opacity: 0.12; }
+  100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+}
+
+/* ============ HEADER ============ */
+.header {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(90, 45, 130, 0.08);
+  transition: var(--transition);
+}
+.header-inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+}
+.logo-link { display: flex; align-items: center; gap: 12px; }
+.logo-link img {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  transition: var(--transition);
+}
+.logo-link:hover img { transform: scale(1.06) rotate(-3deg); }
+.logo-text { font-weight: 800; font-size: 1.1rem; color: var(--primary); }
+
+.header-right { display: flex; align-items: center; gap: 12px; }
+.lang-switcher {
+  display: flex; background: var(--primary-soft);
+  border-radius: 10px; padding: 4px; gap: 2px;
+}
+.lang-switcher button {
+  padding: 6px 14px; font-weight: 600; font-size: 0.85rem;
+  border-radius: 7px; color: var(--primary);
+  transition: var(--transition);
+}
+.lang-switcher button.active {
+  background: var(--primary); color: var(--white);
+  box-shadow: 0 2px 8px rgba(90,45,130,0.3);
+}
+.menu-btn {
+  width: 44px; height: 44px;
+  border-radius: 11px;
+  background: var(--primary);
+  color: var(--white);
+  font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(90,45,130,0.25);
+}
+.menu-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(90,45,130,0.4); }
+
+/* ============ SIDEBAR ============ */
+.sidebar-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1500;
+  opacity: 0; visibility: hidden;
+  transition: var(--transition);
+}
+.sidebar-overlay.open { opacity: 1; visibility: visible; }
+.sidebar {
+  position: fixed; top: 0; right: -340px;
+  width: 320px; max-width: 85vw; height: 100vh;
+  background: var(--white);
+  z-index: 2000;
+  padding: 24px;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+body[dir="rtl"] .sidebar { right: auto; left: -340px; transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.sidebar.open { right: 0; }
+body[dir="rtl"] .sidebar.open { left: 0; right: auto; }
+.sidebar-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 2px solid var(--primary-soft);
+}
+.sidebar-header img { width: 50px; height: 50px; border-radius: 10px; }
+.close-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--primary-soft); color: var(--primary);
+  font-size: 1.1rem; transition: var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.close-btn:hover { background: var(--primary); color: var(--white); transform: rotate(90deg); }
+
+.sidebar-nav { display: flex; flex-direction: column; gap: 6px; }
+.sidebar-nav a {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: 12px;
+  font-weight: 600; color: var(--black);
+  transition: var(--transition);
+}
+.sidebar-nav a i { color: var(--primary); width: 22px; text-align: center; font-size: 1.05rem; }
+.sidebar-nav a:hover {
+  background: var(--primary-soft); color: var(--primary);
+  transform: translateX(-6px);
+}
+body[dir="rtl"] .sidebar-nav a:hover { transform: translateX(6px); }
+
+/* ============ EVENT BANNER ============ */
+.event-banner {
+  margin: 28px 24px;
+  max-width: 1280px;
+  margin-left: auto; margin-right: auto;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary-dark) 100%);
+  box-shadow: 0 20px 60px rgba(90,45,130,0.35);
+  min-height: 360px;
+}
+.event-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23ffffff' fill-opacity='0.06' d='M50 50c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10zM10 10c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10c0 5.5-4.5 10-10 10s-10-4.5-10-10 4.5-10 10-10z'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.event-banner-img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0.35; z-index: 0;
+}
+.event-banner-content {
+  position: relative; z-index: 2;
+  padding: 50px 40px;
+  color: var(--white);
+  display: flex; flex-direction: column;
+  align-items: flex-start; gap: 16px;
+  min-height: 360px; justify-content: center;
+}
+.event-tag {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 16px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+.event-title {
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+  font-weight: 800; line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.event-meta {
+  display: flex; flex-wrap: wrap; gap: 20px;
+  font-size: 0.95rem; font-weight: 500;
+}
+.event-meta span { display: flex; align-items: center; gap: 8px; }
+.event-meta i { font-size: 1.1rem; }
+
+.event-btn {
+  margin-top: 8px;
+  background: var(--white); color: var(--primary);
+  padding: 14px 32px; border-radius: 50px;
+  font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; gap: 10px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  animation: pulseBtn 2.2s ease-in-out infinite;
+  transition: var(--transition);
+}
+.event-btn::before {
+  content: ''; position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(90,45,130,0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+.event-btn:hover::before { width: 400px; height: 400px; }
+.event-btn:hover { transform: translateY(-3px) scale(1.04); }
+@keyframes pulseBtn {
+  0%, 100% { box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 0 0 rgba(255,255,255,0.5); }
+  50% { box-shadow: 0 8px 24px rgba(0,0,0,0.2), 0 0 0 18px rgba(255,255,255,0); }
+}
+
+/* ============ SECTIONS ============ */
+.section {
+  padding: 70px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center; margin-bottom: 48px;
+}
+.section-title {
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 800; color: var(--primary);
+  margin-bottom: 12px;
+  position: relative; display: inline-block;
+}
+.section-title::after {
+  content: ''; position: absolute;
+  bottom: -10px; left: 50%; transform: translateX(-50%);
+  width: 60px; height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: 2px;
+}
+.section-subtitle {
+  color: var(--gray); font-size: 1.05rem;
+  margin-top: 22px; max-width: 600px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* ============ SERVICES ============ */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+.service-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid rgba(90,45,130,0.06);
+  display: flex; flex-direction: column;
+}
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+.service-card-img {
+  width: 100%; aspect-ratio: 16/10;
+  object-fit: cover;
+  background: var(--primary-soft);
+}
+.service-card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+.service-card-title {
+  font-size: 1.2rem; font-weight: 700;
+  color: var(--primary); margin-bottom: 10px;
+}
+.service-card-desc { color: var(--gray); font-size: 0.93rem; flex: 1; }
+
+/* ============ WORKS (BLOG) ============ */
+.work-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+  border: 1px solid rgba(90,45,130,0.06);
+}
+.work-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+.work-card-img {
+  width: 100%; aspect-ratio: 16/10;
+  object-fit: cover;
+  background: var(--primary-soft);
+}
+.work-card-body { padding: 22px; }
+.work-card-title {
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--primary); margin-bottom: 8px;
+}
+.work-card-excerpt {
+  color: var(--gray); font-size: 0.9rem;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.work-readmore {
+  margin-top: 14px;
+  color: var(--primary); font-weight: 600; font-size: 0.9rem;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+/* ============ PARTNERS ============ */
+.partners-marquee {
+  overflow: hidden;
+  padding: 20px 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.partners-track {
+  display: flex; gap: 50px;
+  animation: scrollMarquee 25s linear infinite;
+  width: max-content;
+}
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.partner-logo {
+  width: 130px; height: 90px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: 1px solid var(--border);
+}
+.partner-logo:hover { transform: scale(1.08); box-shadow: var(--shadow-lg); }
+.partner-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* ============ FOOTER ============ */
+.footer {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 60px 24px 30px;
+  margin-top: 60px;
+  position: relative;
+}
+.footer-grid {
+  max-width: 1280px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 36px;
+}
+.footer-col h3 {
+  font-size: 1.1rem; font-weight: 700;
+  margin-bottom: 18px;
+  position: relative; padding-bottom: 10px;
+}
+.footer-col h3::after {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; width: 40px; height: 3px;
+  background: var(--white); border-radius: 2px;
+}
+body[dir="rtl"] .footer-col h3::after { left: auto; right: 0; }
+.footer-col p, .footer-col a {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.92rem; line-height: 1.9;
+  display: block; transition: var(--transition);
+}
+.footer-col a:hover { color: var(--white); transform: translateX(4px); }
+body[dir="rtl"] .footer-col a:hover { transform: translateX(-4px); }
+.footer-contact-item {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+}
+.footer-contact-item i { width: 20px; }
+.social-icons { display: flex; gap: 10px; margin-top: 12px; }
+.social-icons a {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+.social-icons a:hover {
+  background: var(--white); color: var(--primary);
+  transform: translateY(-4px) scale(1.1);
+}
+#map {
+  width: 100%; height: 100%;
+  min-height: 180px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+.footer-bottom {
+  max-width: 1280px; margin: 40px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  text-align: center; font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ============ WHATSAPP FLOAT ============ */
+.whatsapp-float {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 60px; height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white); font-size: 1.8rem;
+  box-shadow: 0 8px 24px rgba(37,211,102,0.5);
+  z-index: 999;
+  animation: whatsappPulse 2s ease-in-out infinite;
+  transition: var(--transition);
+}
+body[dir="rtl"] .whatsapp-float { right: auto; left: 24px; }
+.whatsapp-float:hover { transform: scale(1.1) rotate(8deg); }
+@keyframes whatsappPulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.6); }
+  50% { box-shadow: 0 8px 24px rgba(37,211,102,0.5), 0 0 0 18px rgba(37,211,102,0); }
+}
+
+/* ============ MODAL ============ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 3000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; visibility: hidden;
+  transition: var(--transition);
+}
+.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal {
+  background: var(--white);
+  border-radius: 20px;
+  max-width: 700px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  padding: 30px;
+  position: relative;
+  transform: scale(0.92);
+  transition: transform 0.3s;
+}
+.modal-overlay.open .modal { transform: scale(1); }
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--primary-soft); color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+}
+body[dir="rtl"] .modal-close { right: auto; left: 16px; }
+.modal-close:hover { background: var(--primary); color: var(--white); transform: rotate(90deg); }
+.modal h2 { color: var(--primary); margin-bottom: 16px; }
+.modal-body img { width: 100%; border-radius: 12px; margin-bottom: 18px; max-height: 400px; object-fit: cover; }
+.modal-body { color: var(--black); white-space: pre-wrap; line-height: 1.8; }
+
+/* ============ FORMS ============ */
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-weight: 600;
+  margin-bottom: 6px; color: var(--primary);
+  font-size: 0.9rem;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%; padding: 12px 14px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  background: var(--white);
+  color: var(--black);
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  outline: none; border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(90,45,130,0.1);
+}
+.form-textarea { min-height: 110px; resize: vertical; }
+.btn-primary {
+  background: var(--primary); color: var(--white);
+  padding: 12px 24px; border-radius: 10px;
+  font-weight: 600; font-size: 0.95rem;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: var(--transition);
+}
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+.btn-secondary {
+  background: var(--primary-soft); color: var(--primary);
+  padding: 12px 24px; border-radius: 10px;
+  font-weight: 600; transition: var(--transition);
+}
+.btn-secondary:hover { background: var(--primary); color: var(--white); }
+.btn-danger {
+  background: #dc2626; color: var(--white);
+  padding: 8px 14px; border-radius: 8px;
+  font-weight: 600; font-size: 0.85rem;
+  transition: var(--transition);
+}
+.btn-danger:hover { background: #991b1b; }
+
+/* ============ ADMIN PANEL ============ */
+.admin-page {
+  display: none; min-height: 100vh;
+  background: linear-gradient(135deg, #f8f3fc 0%, #fdfcff 100%);
+  padding: 24px;
+}
+.admin-page.active { display: block; }
+.admin-page.active ~ .public-page { display: none; }
+
+.login-container {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  padding: 20px;
+}
+.login-box {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 40px 32px;
+  width: 100%; max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.login-box img { width: 70px; margin: 0 auto 16px; border-radius: 14px; }
+.login-box h2 { text-align: center; color: var(--primary); margin-bottom: 24px; }
+.login-error {
+  background: #fee2e2; color: #991b1b;
+  padding: 10px 14px; border-radius: 8px;
+  font-size: 0.85rem; margin-bottom: 14px;
+  display: none;
+}
+.login-error.show { display: block; }
+
+.dashboard-header {
+  background: var(--white);
+  padding: 18px 24px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
+  box-shadow: var(--shadow);
+}
+.dashboard-header h1 { color: var(--primary); font-size: 1.3rem; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px; margin-bottom: 28px;
+}
+.stat-card {
+  padding: 24px;
+  border-radius: 16px;
+  color: var(--white);
+  box-shadow: var(--shadow-lg);
+  position: relative; overflow: hidden;
+  transition: var(--transition);
+}
+.stat-card:hover { transform: translateY(-4px); }
+.stat-card::before {
+  content: ''; position: absolute;
+  top: -30px; right: -30px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+}
+.stat-card i {
+  font-size: 1.8rem; margin-bottom: 12px;
+  opacity: 0.9;
+}
+.stat-card h3 { font-size: 0.85rem; font-weight: 500; opacity: 0.9; }
+.stat-card .stat-value {
+  font-size: 2.2rem; font-weight: 800;
+  margin-top: 6px;
+}
+.stat-card.purple { background: linear-gradient(135deg, #5A2D82, #7B3FA8); }
+.stat-card.blue { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+.stat-card.green { background: linear-gradient(135deg, #059669, #10b981); }
+.stat-card.orange { background: linear-gradient(135deg, #ea580c, #fb923c); }
+
+.admin-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 20px;
+  background: var(--white);
+  padding: 8px; border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.admin-tab {
+  padding: 10px 18px; border-radius: 10px;
+  font-weight: 600; font-size: 0.88rem;
+  color: var(--gray);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.admin-tab.active {
+  background: var(--primary); color: var(--white);
+}
+.admin-section {
+  background: var(--white);
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  display: none;
+}
+.admin-section.active { display: block; }
+.admin-section h2 {
+  color: var(--primary); margin-bottom: 20px;
+  font-size: 1.2rem; padding-bottom: 12px;
+  border-bottom: 2px solid var(--primary-soft);
+}
+.lang-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.lang-tab {
+  padding: 6px 14px; border-radius: 8px;
+  background: var(--primary-soft); color: var(--primary);
+  font-weight: 600; font-size: 0.85rem;
+  transition: var(--transition);
+}
+.lang-tab.active { background: var(--primary); color: var(--white); }
+.lang-content { display: none; }
+.lang-content.active { display: block; }
+
+.admin-list { display: grid; gap: 14px; margin-top: 18px; }
+.admin-list-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px;
+  background: var(--light-gray);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.admin-list-item img {
+  width: 70px; height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.admin-list-item-content { flex: 1; min-width: 0; }
+.admin-list-item-content h4 {
+  font-size: 0.95rem; color: var(--primary);
+  margin-bottom: 4px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.admin-list-item-content p {
+  font-size: 0.82rem; color: var(--gray);
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.toast {
+  position: fixed; bottom: 30px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--primary); color: var(--white);
+  padding: 14px 22px; border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  font-weight: 600; z-index: 9999;
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.error { background: #dc2626; }
+
+/* ============ LOADER ============ */
+.loader {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  text-align: center; padding: 40px 20px;
+  color: var(--gray);
+}
+.empty-state i { font-size: 2.5rem; color: var(--primary-light); margin-bottom: 12px; opacity: 0.5; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .header-inner { padding: 12px 16px; }
+  .logo-link img { width: 46px; height: 46px; }
+  .logo-text { display: none; }
+  .lang-switcher button { padding: 5px 10px; font-size: 0.78rem; }
+  .menu-btn { width: 40px; height: 40px; }
+  .event-banner { margin: 16px; min-height: 320px; border-radius: 18px; }
+  .event-banner-content { padding: 32px 24px; }
+  .section { padding: 50px 16px; }
+  .footer { padding: 50px 16px 24px; }
+  .whatsapp-float { width: 54px; height: 54px; bottom: 16px; right: 16px; font-size: 1.6rem; }
+  body[dir="rtl"] .whatsapp-float { left: 16px; right: auto; }
+  .modal { padding: 22px 18px; }
+  .stat-card .stat-value { font-size: 1.8rem; }
+  .admin-page { padding: 12px; }
+  .admin-section { padding: 18px; }
+}
+
+/* ============ ANTI-COPY ============ */
+body.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.admin-page input, .admin-page textarea, .modal input, .modal textarea {
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+[hidden] { display: none !important; }
+
+.fade-in { animation: fadeIn 0.6s ease-out both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body class="no-select">
+
+<!-- ============ ANIMATED BACKGROUND ============ -->
+<div class="bg-animation" id="bgAnimation" aria-hidden="true"></div>
+
+<!-- ============ PUBLIC PAGE ============ -->
+<div class="public-page" id="publicPage">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo-link" onclick="event.preventDefault(); window.scrollTo({top:0, behavior:'smooth'})">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZvc2VX08-mtAOEnVZNA2xH8QGRGz2GbqIuMTKDh0suB-bjVIAogCm7ji820GlbHAkWWKsOg2yn3EAH7nMM_w_lvT3OH4H-UgYzsTiur_l3CzK2fcw2n_jTX1Z-t25DaLbwrY0jnDE13Zo3lrh8ZkXF5ybieZJOdpBQ4Xkr_zbn8LFS3zQDf5Bft28Zr4/s320/1000013350.png" alt="Bella Skills">
+        <span class="logo-text">Bella Skills</span>
+      </a>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button data-lang="fr" class="active" onclick="setLanguage('fr')">FR</button>
+          <button data-lang="ar" onclick="setLanguage('ar')">AR</button>
+        </div>
+        <button class="menu-btn" onclick="toggleSidebar(true)" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar(false)"></div>
+  <aside class="sidebar" id="sidebar" aria-hidden="true">
+    <div class="sidebar-header">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZvc2VX08-mtAOEnVZNA2xH8QGRGz2GbqIuMTKDh0suB-bjVIAogCm7ji820GlbHAkWWKsOg2yn3EAH7nMM_w_lvT3OH4H-UgYzsTiur_l3CzK2fcw2n_jTX1Z-t25DaLbwrY0jnDE13Zo3lrh8ZkXF5ybieZJOdpBQ4Xkr_zbn8LFS3zQDf5Bft28Zr4/s320/1000013350.png" alt="Logo">
+      <button class="close-btn" onclick="toggleSidebar(false)"><i class="fas fa-times"></i></button>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#event" onclick="toggleSidebar(false)"><i class="fas fa-calendar-star"></i><span data-i18n="nav_event">Événement</span></a>
+      <a href="#services" onclick="toggleSidebar(false)"><i class="fas fa-cogs"></i><span data-i18n="nav_services">Nos Services</span></a>
+      <a href="#works" onclick="toggleSidebar(false)"><i class="fas fa-briefcase"></i><span data-i18n="nav_works">Nos Travaux</span></a>
+      <a href="#partners" onclick="toggleSidebar(false)"><i class="fas fa-handshake"></i><span data-i18n="nav_partners">Nos Partenaires</span></a>
+      <a href="#about" onclick="toggleSidebar(false)"><i class="fas fa-info-circle"></i><span data-i18n="nav_about">À Propos</span></a>
+      <a href="#privacy" onclick="toggleSidebar(false)"><i class="fas fa-shield-alt"></i><span data-i18n="nav_privacy">Confidentialité</span></a>
+      <a href="#contact" onclick="toggleSidebar(false)"><i class="fas fa-envelope"></i><span data-i18n="nav_contact">Contact</span></a>
+    </nav>
+  </aside>
+
+  <!-- EVENT BANNER -->
+  <section class="event-banner fade-in" id="event">
+    <img id="eventBannerImg" class="event-banner-img" src="" alt="" style="display:none">
+    <div class="event-banner-content">
+      <span class="event-tag" data-i18n="event_tag">PROCHAIN ÉVÉNEMENT</span>
+      <h1 class="event-title" id="eventTitle" data-i18n="event_title">Atelier Formation Professionnelle</h1>
+      <div class="event-meta">
+        <span><i class="fas fa-map-marker-alt"></i> <span id="eventLocation" data-i18n="event_location">Alger, Algérie</span></span>
+        <span><i class="fas fa-calendar"></i> <span id="eventDate">15 / 06 / 2026</span></span>
+        <span><i class="fas fa-clock"></i> <span id="eventTime">09:00</span></span>
+      </div>
+      <p id="eventDesc" data-i18n="event_desc" style="max-width:600px; opacity:0.95;">Rejoignez-nous pour un événement exclusif dédié au développement des compétences professionnelles.</p>
+      <a id="eventBtn" href="#" target="_blank" rel="noopener" class="event-btn">
+        <i class="fas fa-ticket"></i>
+        <span id="eventBtnLabel" data-i18n="event_register">S'inscrire à l'événement</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="services_title">Nos Services</h2>
+      <p class="section-subtitle" data-i18n="services_sub">Découvrez la gamme complète de services que nous offrons</p>
+    </div>
+    <div class="cards-grid" id="servicesGrid"></div>
+  </section>
+
+  <!-- WORKS -->
+  <section class="section" id="works" style="background: var(--primary-soft); border-radius: 30px;">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="works_title">Nos Travaux</h2>
+      <p class="section-subtitle" data-i18n="works_sub">Explorez nos réalisations et projets récents</p>
+    </div>
+    <div class="cards-grid" id="worksGrid"></div>
+  </section>
+
+  <!-- PARTNERS -->
+  <section class="section" id="partners">
+    <div class="section-header">
+      <h2 class="section-title" data-i18n="partners_title">Nos Partenaires</h2>
+      <p class="section-subtitle" data-i18n="partners_sub">Les institutions qui nous font confiance</p>
+    </div>
+    <div class="partners-marquee">
+      <div class="partners-track" id="partnersTrack"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col" id="about">
+        <h3 data-i18n="footer_about">À Propos</h3>
+        <p id="aboutText" data-i18n="about_text">Bella Skills est une plateforme dédiée au développement des compétences professionnelles.</p>
+        <div class="social-icons">
+          <a id="fbLink" href="#" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a id="igLink" href="#" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col" id="contact">
+        <h3 data-i18n="footer_contact">Contact</h3>
+        <div class="footer-contact-item"><i class="fas fa-envelope"></i> <span id="contactEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ccafa3a2b8adafb88caea9a0a0adbfa7a5a0a0bfe2afa3a1">[email&#160;protected]</a></span></div>
+        <div class="footer-contact-item"><i class="fas fa-phone"></i> <span id="contactPhone">+213 559 06 66 05</span></div>
+        <div class="footer-contact-item"><i class="fab fa-whatsapp"></i> +213 559 06 66 05</div>
+      </div>
+      <div class="footer-col" id="privacy">
+        <h3 data-i18n="footer_privacy">Confidentialité</h3>
+        <p id="privacyText" data-i18n="privacy_text" style="font-size:0.85rem; line-height:1.7;">Nous respectons votre vie privée et protégeons vos données personnelles conformément aux lois en vigueur.</p>
+      </div>
+      <div class="footer-col">
+        <h3 data-i18n="footer_location">Notre Localisation</h3>
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Bella Skills. <span data-i18n="rights">Tous droits réservés.</span>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/213559066605" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+</div> <!-- end public-page -->
+
+<!-- ============ ADMIN PAGE ============ -->
+<div class="admin-page" id="adminPage">
+  <!-- LOGIN -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-box">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZvc2VX08-mtAOEnVZNA2xH8QGRGz2GbqIuMTKDh0suB-bjVIAogCm7ji820GlbHAkWWKsOg2yn3EAH7nMM_w_lvT3OH4H-UgYzsTiur_l3CzK2fcw2n_jTX1Z-t25DaLbwrY0jnDE13Zo3lrh8ZkXF5ybieZJOdpBQ4Xkr_zbn8LFS3zQDf5Bft28Zr4/s320/1000013350.png" alt="Logo">
+      <h2><i class="fas fa-lock"></i> Admin Login</h2>
+      <div class="login-error" id="loginError"></div>
+      <form onsubmit="event.preventDefault(); doLogin();" autocomplete="off">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" class="form-input" id="loginUser" autocomplete="off" required>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-input" id="loginPass" autocomplete="new-password" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+          <i class="fas fa-sign-in-alt"></i> <span>Connexion</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" style="display:none;">
+    <div class="dashboard-header">
+      <h1><i class="fas fa-th-large"></i> Tableau de Bord</h1>
+      <div style="display:flex; gap:10px;">
+        <a href="#" class="btn-secondary" onclick="event.preventDefault(); window.location.hash=''; location.reload();"><i class="fas fa-eye"></i> Voir le Site</a>
+        <button class="btn-danger" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card purple">
+        <i class="fas fa-user-plus"></i>
+        <h3>Nouvelles Inscriptions</h3>
+        <div class="stat-value" id="statRegistrations">0</div>
+      </div>
+      <div class="stat-card blue">
+        <i class="fas fa-eye"></i>
+        <h3>Visites Aujourd'hui</h3>
+        <div class="stat-value" id="statDaily">0</div>
+      </div>
+      <div class="stat-card green">
+        <i class="fas fa-chart-line"></i>
+        <h3>Visites ce Mois</h3>
+        <div class="stat-value" id="statMonthly">0</div>
+      </div>
+      <div class="stat-card orange">
+        <i class="fas fa-globe"></i>
+        <h3>Total Visites</h3>
+        <div class="stat-value" id="statTotal">0</div>
+      </div>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="showAdminSection('banner', this)"><i class="fas fa-image"></i> Bannière</button>
+      <button class="admin-tab" onclick="showAdminSection('services', this)"><i class="fas fa-cogs"></i> Services</button>
+      <button class="admin-tab" onclick="showAdminSection('works', this)"><i class="fas fa-briefcase"></i> Travaux</button>
+      <button class="admin-tab" onclick="showAdminSection('partners', this)"><i class="fas fa-handshake"></i> Partenaires</button>
+      <button class="admin-tab" onclick="showAdminSection('settings', this)"><i class="fas fa-cog"></i> Paramètres</button>
+    </div>
+
+    <!-- BANNER SECTION -->
+    <div class="admin-section active" id="adminBanner">
+      <h2><i class="fas fa-image"></i> Bannière de l'Événement</h2>
+      <div class="lang-tabs">
+        <button class="lang-tab active" onclick="switchLangTab('banner','fr',this)">Français</button>
+        <button class="lang-tab" onclick="switchLangTab('banner','ar',this)">العربية</button>
+      </div>
+      <div class="lang-content active" id="bannerLangFr">
+        <div class="form-group"><label>Titre (FR)</label><input type="text" class="form-input" id="bannerTitleFr"></div>
+        <div class="form-group"><label>Description (FR)</label><textarea class="form-textarea" id="bannerDescFr"></textarea></div>
+        <div class="form-group"><label>Lieu (FR)</label><input type="text" class="form-input" id="bannerLocationFr"></div>
+        <div class="form-group"><label>Texte du bouton (FR)</label><input type="text" class="form-input" id="bannerBtnFr"></div>
+      </div>
+      <div class="lang-content" id="bannerLangAr">
+        <div class="form-group"><label>العنوان (AR)</label><input type="text" class="form-input" id="bannerTitleAr" dir="rtl"></div>
+        <div class="form-group"><label>الوصف (AR)</label><textarea class="form-textarea" id="bannerDescAr" dir="rtl"></textarea></div>
+        <div class="form-group"><label>المكان (AR)</label><input type="text" class="form-input" id="bannerLocationAr" dir="rtl"></div>
+        <div class="form-group"><label>نص الزر (AR)</label><input type="text" class="form-input" id="bannerBtnAr" dir="rtl"></div>
+      </div>
+      <div class="form-group"><label>Date</label><input type="date" class="form-input" id="bannerDate"></div>
+      <div class="form-group"><label>Heure</label><input type="time" class="form-input" id="bannerTime"></div>
+      <div class="form-group"><label>Image de fond (URL)</label><input type="url" class="form-input" id="bannerImage" placeholder="https://..."></div>
+      <div class="form-group"><label>Lien d'inscription</label><input type="url" class="form-input" id="bannerLink" placeholder="https://..."></div>
+      <button class="btn-primary" onclick="saveBanner()"><i class="fas fa-save"></i> Sauvegarder</button>
+    </div>
+
+    <!-- SERVICES SECTION -->
+    <div class="admin-section" id="adminServices">
+      <h2><i class="fas fa-cogs"></i> Gérer les Services</h2>
+      <div class="lang-tabs">
+        <button class="lang-tab active" onclick="switchLangTab('service','fr',this)">Français</button>
+        <button class="lang-tab" onclick="switchLangTab('service','ar',this)">العربية</button>
+      </div>
+      <div class="lang-content active" id="serviceLangFr">
+        <div class="form-group"><label>Titre (FR)</label><input type="text" class="form-input" id="serviceTitleFr"></div>
+        <div class="form-group"><label>Description (FR)</label><textarea class="form-textarea" id="serviceDescFr"></textarea></div>
+      </div>
+      <div class="lang-content" id="serviceLangAr">
+        <div class="form-group"><label>العنوان (AR)</label><input type="text" class="form-input" id="serviceTitleAr" dir="rtl"></div>
+        <div class="form-group"><label>الوصف (AR)</label><textarea class="form-textarea" id="serviceDescAr" dir="rtl"></textarea></div>
+      </div>
+      <div class="form-group"><label>Image (URL)</label><input type="url" class="form-input" id="serviceImage" placeholder="https://..."></div>
+      <button class="btn-primary" onclick="addService()"><i class="fas fa-plus"></i> Ajouter Service</button>
+      <div class="admin-list" id="servicesList"></div>
+    </div>
+
+    <!-- WORKS SECTION -->
+    <div class="admin-section" id="adminWorks">
+      <h2><i class="fas fa-briefcase"></i> Gérer les Travaux (Blog)</h2>
+      <div class="lang-tabs">
+        <button class="lang-tab active" onclick="switchLangTab('work','fr',this)">Français</button>
+        <button class="lang-tab" onclick="switchLangTab('work','ar',this)">العربية</button>
+      </div>
+      <div class="lang-content active" id="workLangFr">
+        <div class="form-group"><label>Titre (FR)</label><input type="text" class="form-input" id="workTitleFr"></div>
+        <div class="form-group"><label>Extrait court (FR)</label><input type="text" class="form-input" id="workExcerptFr"></div>
+        <div class="form-group"><label>Texte complet (FR)</label><textarea class="form-textarea" id="workContentFr" style="min-height:200px;"></textarea></div>
+      </div>
+      <div class="lang-content" id="workLangAr">
+        <div class="form-group"><label>العنوان (AR)</label><input type="text" class="form-input" id="workTitleAr" dir="rtl"></div>
+        <div class="form-group"><label>مقتطف قصير (AR)</label><input type="text" class="form-input" id="workExcerptAr" dir="rtl"></div>
+        <div class="form-group"><label>النص الكامل (AR)</label><textarea class="form-textarea" id="workContentAr" dir="rtl" style="min-height:200px;"></textarea></div>
+      </div>
+      <div class="form-group"><label>Image (URL)</label><input type="url" class="form-input" id="workImage" placeholder="https://..."></div>
+      <button class="btn-primary" onclick="addWork()"><i class="fas fa-plus"></i> Ajouter une Publication</button>
+      <div class="admin-list" id="worksList"></div>
+    </div>
+
+    <!-- PARTNERS SECTION -->
+    <div class="admin-section" id="adminPartners">
+      <h2><i class="fas fa-handshake"></i> Gérer les Partenaires</h2>
+      <div class="form-group"><label>Nom du Partenaire</label><input type="text" class="form-input" id="partnerName"></div>
+      <div class="form-group"><label>Logo (URL)</label><input type="url" class="form-input" id="partnerLogo" placeholder="https://..."></div>
+      <button class="btn-primary" onclick="addPartner()"><i class="fas fa-plus"></i> Ajouter Partenaire</button>
+      <div class="admin-list" id="partnersList"></div>
+    </div>
+
+    <!-- SETTINGS SECTION -->
+    <div class="admin-section" id="adminSettings">
+      <h2><i class="fas fa-cog"></i> Paramètres Généraux</h2>
+
+      <h3 style="color:var(--primary); font-size:1rem; margin:18px 0 10px;">À Propos</h3>
+      <div class="lang-tabs">
+        <button class="lang-tab active" onclick="switchLangTab('about','fr',this)">Français</button>
+        <button class="lang-tab" onclick="switchLangTab('about','ar',this)">العربية</button>
+      </div>
+      <div class="lang-content active" id="aboutLangFr">
+        <div class="form-group"><textarea class="form-textarea" id="aboutTextFr" placeholder="Texte à propos (FR)"></textarea></div>
+      </div>
+      <div class="lang-content" id="aboutLangAr">
+        <div class="form-group"><textarea class="form-textarea" id="aboutTextAr" dir="rtl" placeholder="نص من نحن (AR)"></textarea></div>
+      </div>
+
+      <h3 style="color:var(--primary); font-size:1rem; margin:18px 0 10px;">Politique de Confidentialité</h3>
+      <div class="lang-tabs">
+        <button class="lang-tab active" onclick="switchLangTab('privacy','fr',this)">Français</button>
+        <button class="lang-tab" onclick="switchLangTab('privacy','ar',this)">العربية</button>
+      </div>
+      <div class="lang-content active" id="privacyLangFr">
+        <div class="form-group"><textarea class="form-textarea" id="privacyTextFr" placeholder="Politique de confidentialité (FR)"></textarea></div>
+      </div>
+      <div class="lang-content" id="privacyLangAr">
+        <div class="form-group"><textarea class="form-textarea" id="privacyTextAr" dir="rtl" placeholder="سياسة الخصوصية (AR)"></textarea></div>
+      </div>
+
+      <h3 style="color:var(--primary); font-size:1rem; margin:18px 0 10px;">Localisation</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div class="form-group"><label>Latitude</label><input type="number" step="any" class="form-input" id="mapLat" placeholder="36.7538"></div>
+        <div class="form-group"><label>Longitude</label><input type="number" step="any" class="form-input" id="mapLng" placeholder="3.0588"></div>
+      </div>
+
+      <h3 style="color:var(--primary); font-size:1rem; margin:18px 0 10px;">Réseaux Sociaux</h3>
+      <div class="form-group"><label><i class="fab fa-facebook"></i> Facebook</label><input type="url" class="form-input" id="socialFb" placeholder="https://facebook.com/..."></div>
+      <div class="form-group"><label><i class="fab fa-instagram"></i> Instagram</label><input type="url" class="form-input" id="socialIg" placeholder="https://instagram.com/..."></div>
+
+      <h3 style="color:var(--primary); font-size:1rem; margin:18px 0 10px;">Contact</h3>
+      <div class="form-group"><label>Email</label><input type="email" class="form-input" id="contactEmailField"></div>
+      <div class="form-group"><label>Téléphone</label><input type="tel" class="form-input" id="contactPhoneField"></div>
+
+      <button class="btn-primary" style="margin-top:14px;" onclick="saveSettings()"><i class="fas fa-save"></i> Sauvegarder Tous les Paramètres</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL (Work Detail) ============ -->
+<div class="modal-overlay" id="workModal" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============ SCRIPTS ============ -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Firebase v10 (compat for simpler usage) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics-compat.js"></script>
+
+<script>
+/* =====================================================
+   SECURITY LAYER
+===================================================== */
+(function securityLayer(){
+  // Disable right-click context menu (except in inputs)
+  document.addEventListener('contextmenu', function(e){
+    const tag = e.target.tagName;
+    if(tag !== 'INPUT' && tag !== 'TEXTAREA') e.preventDefault();
+  });
+  // Block common devtools shortcuts
+  document.addEventListener('keydown', function(e){
+    // F12
+    if(e.keyCode === 123) { e.preventDefault(); return false; }
+    // Ctrl+Shift+I / J / C / U
+    if(e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) { e.preventDefault(); return false; }
+    if(e.ctrlKey && (e.keyCode === 85)) { e.preventDefault(); return false; } // Ctrl+U
+  });
+  // Detect devtools (warning only)
+  let warned = false;
+  setInterval(function(){
+    const threshold = 160;
+    if((window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) && !warned){
+      warned = true;
+      console.clear();
+      console.log('%cAccès non autorisé détecté.', 'color:#5A2D82; font-size:24px; font-weight:bold;');
+    }
+  }, 2000);
+})();
+
+/* =====================================================
+   FIREBASE INIT
+===================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyA1xTHV828178vImPGLFQhr1DS4k9ME28s",
+  authDomain: "bellaskills-8edbb.firebaseapp.com",
+  projectId: "bellaskills-8edbb",
+  storageBucket: "bellaskills-8edbb.firebasestorage.app",
+  messagingSenderId: "730699617338",
+  appId: "1:730699617338:web:2bacbc4078984770e31103",
+  measurementId: "G-E8RP1L6KWJ"
+};
+
+let db = null;
+let firebaseReady = false;
+try {
+  firebase.initializeApp(firebaseConfig);
+  db = firebase.firestore();
+  if(firebase.analytics) firebase.analytics();
+  firebaseReady = true;
+} catch(e) {
+  console.warn('Firebase init failed, using local fallback', e);
+}
+
+/* =====================================================
+   LOCAL FALLBACK STORE (when Firebase offline)
+===================================================== */
+const LocalStore = {
+  get(key, def){ try{ return JSON.parse(localStorage.getItem('bs_'+key)) || def; }catch(e){ return def; } },
+  set(key, val){ try{ localStorage.setItem('bs_'+key, JSON.stringify(val)); }catch(e){} }
+};
+
+/* =====================================================
+   DATA MANAGER (Firebase + Local Fallback)
+===================================================== */
+const DataMgr = {
+  async getDoc(name){
+    if(firebaseReady){
+      try {
+        const snap = await db.collection('site').doc(name).get();
+        if(snap.exists) return snap.data();
+      } catch(e){ console.warn('Firestore read fail', e); }
+    }
+    return LocalStore.get(name, null);
+  },
+  async setDoc(name, data){
+    LocalStore.set(name, data);
+    if(firebaseReady){
+      try { await db.collection('site').doc(name).set(data, {merge: true}); return true; }
+      catch(e){ console.warn('Firestore write fail', e); return false; }
+    }
+    return true;
+  },
+  async getCollection(name){
+    if(firebaseReady){
+      try {
+        const snap = await db.collection(name).orderBy('createdAt', 'desc').get();
+        const items = [];
+        snap.forEach(doc => items.push({id: doc.id, ...doc.data()}));
+        return items;
+      } catch(e){
+        try {
+          const snap = await db.collection(name).get();
+          const items = [];
+          snap.forEach(doc => items.push({id: doc.id, ...doc.data()}));
+          return items;
+        } catch(e2){ console.warn('Firestore collection fail', e2); }
+      }
+    }
+    return LocalStore.get(name, []);
+  },
+  async addItem(name, data){
+    data.createdAt = Date.now();
+    if(firebaseReady){
+      try {
+        const ref = await db.collection(name).add(data);
+        return {id: ref.id, ...data};
+      } catch(e){ console.warn('Firestore add fail', e); }
+    }
+    const list = LocalStore.get(name, []);
+    data.id = 'local_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
+    list.unshift(data);
+    LocalStore.set(name, list);
+    return data;
+  },
+  async deleteItem(name, id){
+    if(firebaseReady && !id.startsWith('local_')){
+      try { await db.collection(name).doc(id).delete(); } catch(e){ console.warn(e); }
+    }
+    const list = LocalStore.get(name, []);
+    LocalStore.set(name, list.filter(i => i.id !== id));
+  },
+  async incrementStat(field){
+    if(firebaseReady){
+      try {
+        const ref = db.collection('stats').doc('counters');
+        await ref.set({
+          [field]: firebase.firestore.FieldValue.increment(1),
+          lastUpdate: Date.now()
+        }, {merge:true});
+      } catch(e){ console.warn('stat incr fail', e); }
+    }
+    const stats = LocalStore.get('stats', {});
+    stats[field] = (stats[field]||0) + 1;
+    LocalStore.set('stats', stats);
+  },
+  async getStats(){
+    if(firebaseReady){
+      try {
+        const snap = await db.collection('stats').doc('counters').get();
+        if(snap.exists) return snap.data();
+      } catch(e){}
+    }
+    return LocalStore.get('stats', {});
+  }
+};
+
+/* =====================================================
+   I18N TRANSLATIONS
+===================================================== */
+const TRANSLATIONS = {
+  fr: {
+    nav_event: "Événement", nav_services: "Nos Services", nav_works: "Nos Travaux",
+    nav_partners: "Nos Partenaires", nav_about: "À Propos", nav_privacy: "Confidentialité",
+    nav_contact: "Contact",
+    event_tag: "PROCHAIN ÉVÉNEMENT",
+    event_title: "Atelier Formation Professionnelle",
+    event_location: "Alger, Algérie",
+    event_desc: "Rejoignez-nous pour un événement exclusif dédié au développement des compétences professionnelles.",
+    event_register: "S'inscrire à l'événement",
+    services_title: "Nos Services", services_sub: "Découvrez la gamme complète de services que nous offrons",
+    works_title: "Nos Travaux", works_sub: "Explorez nos réalisations et projets récents",
+    partners_title: "Nos Partenaires", partners_sub: "Les institutions qui nous font confiance",
+    footer_about: "À Propos", footer_contact: "Contact",
+    footer_privacy: "Confidentialité", footer_location: "Notre Localisation",
+    about_text: "Bella Skills est une plateforme dédiée au développement des compétences professionnelles.",
+    privacy_text: "Nous respectons votre vie privée et protégeons vos données personnelles conformément aux lois en vigueur.",
+    rights: "Tous droits réservés.",
+    read_more: "Lire la suite"
+  },
+  ar: {
+    nav_event: "الحدث", nav_services: "خدماتنا", nav_works: "أعمالنا",
+    nav_partners: "شركاؤنا", nav_about: "من نحن", nav_privacy: "سياسة الخصوصية",
+    nav_contact: "اتصل بنا",
+    event_tag: "الحدث القادم",
+    event_title: "ورشة التدريب المهني",
+    event_location: "الجزائر العاصمة",
+    event_desc: "انضموا إلينا في حدث حصري مخصص لتطوير المهارات المهنية.",
+    event_register: "التسجيل في الحدث",
+    services_title: "خدماتنا", services_sub: "اكتشف مجموعة الخدمات الكاملة التي نقدمها",
+    works_title: "أعمالنا", works_sub: "استكشف إنجازاتنا ومشاريعنا الأخيرة",
+    partners_title: "شركاؤنا", partners_sub: "المؤسسات التي تثق بنا",
+    footer_about: "من نحن", footer_contact: "اتصل بنا",
+    footer_privacy: "سياسة الخصوصية", footer_location: "موقعنا",
+    about_text: "بيلا سكيلز منصة مخصصة لتطوير المهارات المهنية.",
+    privacy_text: "نحن نحترم خصوصيتك ونحمي بياناتك الشخصية وفقًا للقوانين السارية.",
+    rights: "جميع الحقوق محفوظة.",
+    read_more: "قراءة المزيد"
+  }
+};
+
+let currentLang = localStorage.getItem('bs_lang') || 'fr';
+
+function setLanguage(lang){
+  currentLang = lang;
+  localStorage.setItem('bs_lang', lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('.lang-switcher button').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  // Translate static strings
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if(TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) el.textContent = TRANSLATIONS[lang][key];
+  });
+  // Re-render dynamic content
+  renderBanner();
+  renderServices();
+  renderWorks();
+  renderSettings();
+}
+
+/* =====================================================
+   ANIMATED BACKGROUND ICONS
+===================================================== */
+function initBgAnimation(){
+  const bg = document.getElementById('bgAnimation');
+  const icons = ['fa-pen', 'fa-book', 'fa-folder', 'fa-chart-line', 'fa-pencil-alt', 'fa-graduation-cap', 'fa-file-alt', 'fa-chart-bar', 'fa-clipboard', 'fa-pen-fancy'];
+  const count = window.innerWidth < 768 ? 14 : 26;
+  for(let i = 0; i < count; i++){
+    const el = document.createElement('i');
+    el.className = 'fas float-icon ' + icons[Math.floor(Math.random()*icons.length)];
+    el.style.left = Math.random() * 100 + '%';
+    el.style.fontSize = (18 + Math.random()*30) + 'px';
+    el.style.animationDuration = (15 + Math.random()*20) + 's';
+    el.style.animationDelay = (Math.random()*15) + 's';
+    bg.appendChild(el);
+  }
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+function toggleSidebar(open){
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  if(open){ sb.classList.add('open'); ov.classList.add('open'); sb.setAttribute('aria-hidden','false'); }
+  else { sb.classList.remove('open'); ov.classList.remove('open'); sb.setAttribute('aria-hidden','true'); }
+}
+
+/* =====================================================
+   BANNER
+===================================================== */
+let bannerData = {};
+async function loadBanner(){
+  bannerData = (await DataMgr.getDoc('banner')) || {};
+  renderBanner();
+}
+function renderBanner(){
+  const lang = currentLang;
+  const title = (bannerData['title_'+lang]) || (lang==='ar' ? 'ورشة التدريب المهني' : 'Atelier Formation Professionnelle');
+  const desc = (bannerData['desc_'+lang]) || TRANSLATIONS[lang].event_desc;
+  const loc = (bannerData['location_'+lang]) || TRANSLATIONS[lang].event_location;
+  const btn = (bannerData['btn_'+lang]) || TRANSLATIONS[lang].event_register;
+  document.getElementById('eventTitle').textContent = title;
+  document.getElementById('eventDesc').textContent = desc;
+  document.getElementById('eventLocation').textContent = loc;
+  document.getElementById('eventBtnLabel').textContent = btn;
+  document.getElementById('eventDate').textContent = bannerData.date ? new Date(bannerData.date).toLocaleDateString(lang==='ar'?'ar-DZ':'fr-FR') : (lang==='ar'?'15/06/2026':'15/06/2026');
+  document.getElementById('eventTime').textContent = bannerData.time || '09:00';
+  document.getElementById('eventBtn').href = bannerData.link || '#';
+  const img = document.getElementById('eventBannerImg');
+  if(bannerData.image){ img.src = bannerData.image; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
+}
+
+/* =====================================================
+   SERVICES
+===================================================== */
+let services = [];
+async function loadServices(){
+  services = await DataMgr.getCollection('services');
+  renderServices();
+}
+function renderServices(){
+  const grid = document.getElementById('servicesGrid');
+  if(!services.length){
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-cogs"></i><p>'+(currentLang==='ar'?'لا توجد خدمات بعد':'Aucun service pour le moment')+'</p></div>';
+    return;
+  }
+  grid.innerHTML = services.map(s => {
+    const t = escapeHtml(s['title_'+currentLang] || s.title_fr || '');
+    const d = escapeHtml(s['desc_'+currentLang] || s.desc_fr || '');
+    const img = escapeAttr(s.image || '');
+    return `<div class="service-card fade-in">
+      ${img ? `<img class="service-card-img" src="${img}" alt="${t}" loading="lazy">` : `<div class="service-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:3rem;"><i class="fas fa-cogs"></i></div>`}
+      <div class="service-card-body">
+        <h3 class="service-card-title">${t}</h3>
+        <p class="service-card-desc">${d}</p>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* =====================================================
+   WORKS
+===================================================== */
+let works = [];
+async function loadWorks(){
+  works = await DataMgr.getCollection('works');
+  renderWorks();
+}
+function renderWorks(){
+  const grid = document.getElementById('worksGrid');
+  if(!works.length){
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-briefcase"></i><p>'+(currentLang==='ar'?'لا توجد منشورات بعد':'Aucune publication pour le moment')+'</p></div>';
+    return;
+  }
+  grid.innerHTML = works.map((w, i) => {
+    const t = escapeHtml(w['title_'+currentLang] || w.title_fr || '');
+    const e = escapeHtml(w['excerpt_'+currentLang] || w.excerpt_fr || '');
+    const img = escapeAttr(w.image || '');
+    return `<div class="work-card fade-in" onclick="openWork('${w.id}')">
+      ${img ? `<img class="work-card-img" src="${img}" alt="${t}" loading="lazy">` : `<div class="work-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:3rem;"><i class="fas fa-briefcase"></i></div>`}
+      <div class="work-card-body">
+        <h3 class="work-card-title">${t}</h3>
+        <p class="work-card-excerpt">${e}</p>
+        <span class="work-readmore">${TRANSLATIONS[currentLang].read_more} <i class="fas fa-arrow-${currentLang==='ar'?'left':'right'}"></i></span>
+      </div>
+    </div>`;
+  }).join('');
+}
+function openWork(id){
+  const w = works.find(x => x.id === id);
+  if(!w) return;
+  const t = escapeHtml(w['title_'+currentLang] || w.title_fr || '');
+  const c = escapeHtml(w['content_'+currentLang] || w.content_fr || '');
+  document.getElementById('modalContent').innerHTML = `
+    ${w.image ? `<img src="${escapeAttr(w.image)}" alt="${t}">` : ''}
+    <h2>${t}</h2>
+    <div class="modal-body">${c.replace(/\n/g, '<br>')}</div>
+  `;
+  document.getElementById('workModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  document.getElementById('workModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* =====================================================
+   PARTNERS
+===================================================== */
+let partners = [];
+async function loadPartners(){
+  partners = await DataMgr.getCollection('partners');
+  renderPartners();
+}
+function renderPartners(){
+  const track = document.getElementById('partnersTrack');
+  if(!partners.length){
+    track.innerHTML = '<div class="empty-state" style="width:100%"><i class="fas fa-handshake"></i><p>'+(currentLang==='ar'?'لا يوجد شركاء بعد':'Aucun partenaire pour le moment')+'</p></div>';
+    return;
+  }
+  // Duplicate for marquee loop
+  const items = [...partners, ...partners].map(p =>
+    `<div class="partner-logo" title="${escapeAttr(p.name||'')}">
+      <img src="${escapeAttr(p.logo||'')}" alt="${escapeAttr(p.name||'')}" loading="lazy">
+    </div>`
+  ).join('');
+  track.innerHTML = items;
+}
+
+/* =====================================================
+   SETTINGS / FOOTER
+===================================================== */
+let settings = {};
+async function loadSettings(){
+  settings = (await DataMgr.getDoc('settings')) || {};
+  renderSettings();
+}
+function renderSettings(){
+  const lang = currentLang;
+  document.getElementById('aboutText').textContent = settings['about_'+lang] || TRANSLATIONS[lang].about_text;
+  document.getElementById('privacyText').textContent = settings['privacy_'+lang] || TRANSLATIONS[lang].privacy_text;
+  document.getElementById('contactEmail').textContent = settings.email || 'contact@bellaskills.com';
+  document.getElementById('contactPhone').textContent = settings.phone || '+213 559 06 66 05';
+  document.getElementById('fbLink').href = settings.facebook || '#';
+  document.getElementById('igLink').href = settings.instagram || '#';
+  initMap();
+}
+
+/* =====================================================
+   MAP (Leaflet)
+===================================================== */
+let mapInstance = null;
+function initMap(){
+  const lat = parseFloat(settings.lat) || 36.7538;
+  const lng = parseFloat(settings.lng) || 3.0588;
+  if(mapInstance){ mapInstance.remove(); mapInstance = null; }
+  try {
+    mapInstance = L.map('map', {zoomControl: false, attributionControl: false}).setView([lat, lng], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapInstance);
+    const purpleIcon = L.divIcon({
+      html: '<div style="background:#5A2D82;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 4px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;"><i class="fas fa-map-marker-alt" style="color:white;transform:rotate(45deg);font-size:14px;"></i></div>',
+      iconSize: [32, 32], iconAnchor: [16, 32], className: ''
+    });
+    L.marker([lat, lng], {icon: purpleIcon}).addTo(mapInstance).bindPopup('<b>Bella Skills</b>');
+  } catch(e){ console.warn('Map init fail', e); }
+}
+
+/* =====================================================
+   UTILITIES
+===================================================== */
+function escapeHtml(str){
+  if(str==null) return '';
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function escapeAttr(str){
+  if(str==null) return '';
+  return String(str).replace(/["'<>&]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function showToast(msg, isError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), 3000);
+}
+
+/* =====================================================
+   ANALYTICS / VISIT TRACKING
+===================================================== */
+async function trackVisit(){
+  const today = new Date().toISOString().slice(0,10);
+  const month = today.slice(0,7);
+  const lastVisit = localStorage.getItem('bs_lastVisit');
+  const lastMonth = localStorage.getItem('bs_lastMonth');
+
+  if(firebaseReady){
+    try {
+      // Total visits
+      await db.collection('stats').doc('counters').set({
+        total: firebase.firestore.FieldValue.increment(1)
+      }, {merge:true});
+
+      // Daily visit (one per day per browser)
+      if(lastVisit !== today){
+        await db.collection('stats').doc('daily_'+today).set({
+          date: today,
+          count: firebase.firestore.FieldValue.increment(1)
+        }, {merge:true});
+        localStorage.setItem('bs_lastVisit', today);
+      }
+      // Monthly
+      if(lastMonth !== month){
+        await db.collection('stats').doc('monthly_'+month).set({
+          month: month,
+          count: firebase.firestore.FieldValue.increment(1)
+        }, {merge:true});
+        localStorage.setItem('bs_lastMonth', month);
+      }
+    } catch(e){ console.warn('track fail', e); }
+  } else {
+    // local fallback
+    const stats = LocalStore.get('stats', {});
+    stats.total = (stats.total||0)+1;
+    if(lastVisit !== today){ stats['daily_'+today] = (stats['daily_'+today]||0)+1; localStorage.setItem('bs_lastVisit', today); }
+    if(lastMonth !== month){ stats['monthly_'+month] = (stats['monthly_'+month]||0)+1; localStorage.setItem('bs_lastMonth', month); }
+    LocalStore.set('stats', stats);
+  }
+}
+
+/* =====================================================
+   ADMIN AUTHENTICATION (Hashed)
+===================================================== */
+const ADMIN_USER_HASH = 'ca4a30807c088c49f68bba41dadaf957a5ecf18b0a591717591253b815681c4a';
+const ADMIN_PASS_HASH = '5413d3f74ea9ca9c62ed5758687a1d3edda4392e2baea7e2e46e7fd254dda4b5';
+
+async function sha256(str){
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function doLogin(){
+  const u = document.getElementById('loginUser').value.trim();
+  const p = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+
+  // Rate limit
+  const attempts = parseInt(localStorage.getItem('bs_loginAttempts')||'0', 10);
+  const lockUntil = parseInt(localStorage.getItem('bs_lockUntil')||'0', 10);
+  if(Date.now() < lockUntil){
+    const wait = Math.ceil((lockUntil - Date.now())/1000);
+    errEl.textContent = `Trop de tentatives. Réessayez dans ${wait}s.`;
+    errEl.classList.add('show');
+    return;
+  }
+
+  const uh = await sha256(u);
+  const ph = await sha256(p);
+  if(uh === ADMIN_USER_HASH && ph === ADMIN_PASS_HASH){
+    const token = btoa(uh.slice(0,16) + ':' + Date.now());
+    sessionStorage.setItem('bs_admin', token);
+    localStorage.removeItem('bs_loginAttempts');
+    errEl.classList.remove('show');
+    showDashboard();
+  } else {
+    const newAttempts = attempts + 1;
+    localStorage.setItem('bs_loginAttempts', newAttempts);
+    if(newAttempts >= 5){
+      localStorage.setItem('bs_lockUntil', Date.now() + 60000);
+      errEl.textContent = 'Trop de tentatives. Verrouillé 60 secondes.';
+    } else {
+      errEl.textContent = `Identifiants incorrects (${newAttempts}/5)`;
+    }
+    errEl.classList.add('show');
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem('bs_admin');
+  location.hash = '';
+  location.reload();
+}
+
+function isAdminAuth(){
+  return !!sessionStorage.getItem('bs_admin');
+}
+
+/* =====================================================
+   ROUTING (admin16 page)
+===================================================== */
+function checkRoute(){
+  const hash = location.hash.replace('#','').toLowerCase();
+  const path = location.pathname.toLowerCase();
+  const isAdminRoute = hash === 'admin16' || path.endsWith('/admin16') || path.endsWith('admin16.html') || path.includes('/admin16');
+
+  if(isAdminRoute){
+    document.getElementById('publicPage').style.display = 'none';
+    document.getElementById('adminPage').classList.add('active');
+    if(isAdminAuth()){
+      showDashboard();
+    } else {
+      document.getElementById('loginContainer').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+    }
+  } else {
+    document.getElementById('publicPage').style.display = 'block';
+    document.getElementById('adminPage').classList.remove('active');
+  }
+}
+
+async function showDashboard(){
+  document.getElementById('loginContainer').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  await loadAdminData();
+  await loadStats();
+}
+
+/* =====================================================
+   ADMIN UI
+===================================================== */
+function showAdminSection(name, btn){
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('admin' + name.charAt(0).toUpperCase() + name.slice(1)).classList.add('active');
+}
+function switchLangTab(prefix, lang, btn){
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  const container = parent.parentElement;
+  container.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+  const target = document.getElementById(prefix + 'Lang' + lang.charAt(0).toUpperCase() + lang.slice(1));
+  if(target) target.classList.add('active');
+}
+
+async function loadAdminData(){
+  await loadBanner();
+  // Fill banner form
+  document.getElementById('bannerTitleFr').value = bannerData.title_fr || '';
+  document.getElementById('bannerTitleAr').value = bannerData.title_ar || '';
+  document.getElementById('bannerDescFr').value = bannerData.desc_fr || '';
+  document.getElementById('bannerDescAr').value = bannerData.desc_ar || '';
+  document.getElementById('bannerLocationFr').value = bannerData.location_fr || '';
+  document.getElementById('bannerLocationAr').value = bannerData.location_ar || '';
+  document.getElementById('bannerBtnFr').value = bannerData.btn_fr || '';
+  document.getElementById('bannerBtnAr').value = bannerData.btn_ar || '';
+  document.getElementById('bannerDate').value = bannerData.date || '';
+  document.getElementById('bannerTime').value = bannerData.time || '';
+  document.getElementById('bannerImage').value = bannerData.image || '';
+  document.getElementById('bannerLink').value = bannerData.link || '';
+
+  await loadServices();
+  renderAdminServices();
+  await loadWorks();
+  renderAdminWorks();
+  await loadPartners();
+  renderAdminPartners();
+
+  await loadSettings();
+  document.getElementById('aboutTextFr').value = settings.about_fr || '';
+  document.getElementById('aboutTextAr').value = settings.about_ar || '';
+  document.getElementById('privacyTextFr').value = settings.privacy_fr || '';
+  document.getElementById('privacyTextAr').value = settings.privacy_ar || '';
+  document.getElementById('mapLat').value = settings.lat || '';
+  document.getElementById('mapLng').value = settings.lng || '';
+  document.getElementById('socialFb').value = settings.facebook || '';
+  document.getElementById('socialIg').value = settings.instagram || '';
+  document.getElementById('contactEmailField').value = settings.email || '';
+  document.getElementById('contactPhoneField').value = settings.phone || '';
+}
+
+async function loadStats(){
+  try {
+    const today = new Date().toISOString().slice(0,10);
+    const month = today.slice(0,7);
+    let total = 0, daily = 0, monthly = 0, registrations = 0;
+    if(firebaseReady){
+      const c = await db.collection('stats').doc('counters').get();
+      if(c.exists){
+        total = c.data().total || 0;
+        registrations = c.data().registrations || 0;
+      }
+      const d = await db.collection('stats').doc('daily_'+today).get();
+      if(d.exists) daily = d.data().count || 0;
+      const m = await db.collection('stats').doc('monthly_'+month).get();
+      if(m.exists) monthly = m.data().count || 0;
+    } else {
+      const s = LocalStore.get('stats', {});
+      total = s.total || 0;
+      daily = s['daily_'+today] || 0;
+      monthly = s['monthly_'+month] || 0;
+      registrations = s.registrations || 0;
+    }
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statDaily').textContent = daily;
+    document.getElementById('statMonthly').textContent = monthly;
+    document.getElementById('statRegistrations').textContent = registrations;
+  } catch(e){ console.warn('stats fail', e); }
+}
+
+/* ----- Banner save ----- */
+async function saveBanner(){
+  const data = {
+    title_fr: document.getElementById('bannerTitleFr').value.trim(),
+    title_ar: document.getElementById('bannerTitleAr').value.trim(),
+    desc_fr: document.getElementById('bannerDescFr').value.trim(),
+    desc_ar: document.getElementById('bannerDescAr').value.trim(),
+    location_fr: document.getElementById('bannerLocationFr').value.trim(),
+    location_ar: document.getElementById('bannerLocationAr').value.trim(),
+    btn_fr: document.getElementById('bannerBtnFr').value.trim(),
+    btn_ar: document.getElementById('bannerBtnAr').value.trim(),
+    date: document.getElementById('bannerDate').value,
+    time: document.getElementById('bannerTime').value,
+    image: document.getElementById('bannerImage').value.trim(),
+    link: document.getElementById('bannerLink').value.trim(),
+    updatedAt: Date.now()
+  };
+  await DataMgr.setDoc('banner', data);
+  bannerData = data;
+  showToast('✓ Bannière sauvegardée');
+}
+
+/* ----- Services ----- */
+async function addService(){
+  const data = {
+    title_fr: document.getElementById('serviceTitleFr').value.trim(),
+    title_ar: document.getElementById('serviceTitleAr').value.trim(),
+    desc_fr: document.getElementById('serviceDescFr').value.trim(),
+    desc_ar: document.getElementById('serviceDescAr').value.trim(),
+    image: document.getElementById('serviceImage').value.trim()
+  };
+  if(!data.title_fr && !data.title_ar){ showToast('Titre requis', true); return; }
+  await DataMgr.addItem('services', data);
+  ['serviceTitleFr','serviceTitleAr','serviceDescFr','serviceDescAr','serviceImage'].forEach(id => document.getElementById(id).value='');
+  await loadServices();
+  renderAdminServices();
+  showToast('✓ Service ajouté');
+}
+function renderAdminServices(){
+  const list = document.getElementById('servicesList');
+  if(!services.length){ list.innerHTML = '<div class="empty-state"><i class="fas fa-cogs"></i><p>Aucun service</p></div>'; return; }
+  list.innerHTML = services.map(s => `
+    <div class="admin-list-item">
+      ${s.image ? `<img src="${escapeAttr(s.image)}" alt="">` : `<div style="width:70px;height:70px;background:var(--primary-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--primary);"><i class="fas fa-cogs"></i></div>`}
+      <div class="admin-list-item-content">
+        <h4>${escapeHtml(s.title_fr || s.title_ar || '-')}</h4>
+        <p>${escapeHtml(s.desc_fr || s.desc_ar || '')}</p>
+      </div>
+      <button class="btn-danger" onclick="deleteService('${s.id}')"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+}
+async function deleteService(id){
+  if(!confirm('Supprimer ce service ?')) return;
+  await DataMgr.deleteItem('services', id);
+  await loadServices();
+  renderAdminServices();
+  showToast('✓ Service supprimé');
+}
+
+/* ----- Works ----- */
+async function addWork(){
+  const data = {
+    title_fr: document.getElementById('workTitleFr').value.trim(),
+    title_ar: document.getElementById('workTitleAr').value.trim(),
+    excerpt_fr: document.getElementById('workExcerptFr').value.trim(),
+    excerpt_ar: document.getElementById('workExcerptAr').value.trim(),
+    content_fr: document.getElementById('workContentFr').value.trim(),
+    content_ar: document.getElementById('workContentAr').value.trim(),
+    image: document.getElementById('workImage').value.trim()
+  };
+  if(!data.title_fr && !data.title_ar){ showToast('Titre requis', true); return; }
+  await DataMgr.addItem('works', data);
+  ['workTitleFr','workTitleAr','workExcerptFr','workExcerptAr','workContentFr','workContentAr','workImage'].forEach(id => document.getElementById(id).value='');
+  await loadWorks();
+  renderAdminWorks();
+  showToast('✓ Publication ajoutée');
+}
+function renderAdminWorks(){
+  const list = document.getElementById('worksList');
+  if(!works.length){ list.innerHTML = '<div class="empty-state"><i class="fas fa-briefcase"></i><p>Aucune publication</p></div>'; return; }
+  list.innerHTML = works.map(w => `
+    <div class="admin-list-item">
+      ${w.image ? `<img src="${escapeAttr(w.image)}" alt="">` : `<div style="width:70px;height:70px;background:var(--primary-soft);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--primary);"><i class="fas fa-briefcase"></i></div>`}
+      <div class="admin-list-item-content">
+        <h4>${escapeHtml(w.title_fr || w.title_ar || '-')}</h4>
+        <p>${escapeHtml(w.excerpt_fr || w.excerpt_ar || '')}</p>
+      </div>
+      <button class="btn-danger" onclick="deleteWork('${w.id}')"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+}
+async function deleteWork(id){
+  if(!confirm('Supprimer cette publication ?')) return;
+  await DataMgr.deleteItem('works', id);
+  await loadWorks();
+  renderAdminWorks();
+  showToast('✓ Publication supprimée');
+}
+
+/* ----- Partners ----- */
+async function addPartner(){
+  const data = {
+    name: document.getElementById('partnerName').value.trim(),
+    logo: document.getElementById('partnerLogo').value.trim()
+  };
+  if(!data.logo){ showToast('Logo requis', true); return; }
+  await DataMgr.addItem('partners', data);
+  document.getElementById('partnerName').value='';
+  document.getElementById('partnerLogo').value='';
+  await loadPartners();
+  renderAdminPartners();
+  showToast('✓ Partenaire ajouté');
+}
+function renderAdminPartners(){
+  const list = document.getElementById('partnersList');
+  if(!partners.length){ list.innerHTML = '<div class="empty-state"><i class="fas fa-handshake"></i><p>Aucun partenaire</p></div>'; return; }
+  list.innerHTML = partners.map(p => `
+    <div class="admin-list-item">
+      ${p.logo ? `<img src="${escapeAttr(p.logo)}" alt="" style="object-fit:contain;background:white;">` : `<div style="width:70px;height:70px;background:var(--primary-soft);border-radius:10px;"></div>`}
+      <div class="admin-list-item-content">
+        <h4>${escapeHtml(p.name || '-')}</h4>
+      </div>
+      <button class="btn-danger" onclick="deletePartner('${p.id}')"><i class="fas fa-trash"></i></button>
+    </div>
+  `).join('');
+}
+async function deletePartner(id){
+  if(!confirm('Supprimer ce partenaire ?')) return;
+  await DataMgr.deleteItem('partners', id);
+  await loadPartners();
+  renderAdminPartners();
+  showToast('✓ Partenaire supprimé');
+}
+
+/* ----- Settings ----- */
+async function saveSettings(){
+  const data = {
+    about_fr: document.getElementById('aboutTextFr').value.trim(),
+    about_ar: document.getElementById('aboutTextAr').value.trim(),
+    privacy_fr: document.getElementById('privacyTextFr').value.trim(),
+    privacy_ar: document.getElementById('privacyTextAr').value.trim(),
+    lat: parseFloat(document.getElementById('mapLat').value) || 36.7538,
+    lng: parseFloat(document.getElementById('mapLng').value) || 3.0588,
+    facebook: document.getElementById('socialFb').value.trim(),
+    instagram: document.getElementById('socialIg').value.trim(),
+    email: document.getElementById('contactEmailField').value.trim(),
+    phone: document.getElementById('contactPhoneField').value.trim(),
+    updatedAt: Date.now()
+  };
+  await DataMgr.setDoc('settings', data);
+  settings = data;
+  showToast('✓ Paramètres sauvegardés');
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+window.addEventListener('DOMContentLoaded', async () => {
+  initBgAnimation();
+  setLanguage(currentLang);
+  checkRoute();
+
+  // Public page only
+  if(!location.hash.toLowerCase().includes('admin16') && !location.pathname.toLowerCase().includes('admin16')){
+    await loadBanner();
+    await loadServices();
+    await loadWorks();
+    await loadPartners();
+    await loadSettings();
+    trackVisit();
+  }
+});
+
+window.addEventListener('hashchange', checkRoute);
+
+// ESC to close modal
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape'){
+    closeModal();
+    if(document.getElementById('sidebar').classList.contains('open')) toggleSidebar(false);
+  }
+});
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
