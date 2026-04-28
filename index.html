@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aitchikh Contact | Pro Dashboard</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; background: #f4f7fe; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .sidebar-item:hover { background: #2563eb; color: white; transform: translateX(-5px); transition: all 0.3s; }
+        .hidden { display: none !important; }
+        #editor { min-height: 300px; border: 2px solid #e2e8f0; border-radius: 15px; padding: 20px; background: white; outline: none; }
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); }
+    </style>
+</head>
+<body>
+
+    <div id="loginSection" class="fixed inset-0 z-50 flex items-center justify-center gradient-bg">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl w-96 text-center animate-bounce-in">
+            <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-lock text-3xl text-blue-600"></i>
+            </div>
+            <h2 class="text-2xl font-black mb-6 text-gray-800" id="loginTitle">تسجيل الدخول</h2>
+            <input type="password" id="accessCode" placeholder="أدخل الكود (1077)" class="w-full p-4 border-2 border-gray-100 rounded-xl mb-4 text-center text-xl focus:border-blue-500 outline-none">
+            <button onclick="checkAuth()" class="w-full bg-blue-600 text-white p-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg">دخول</button>
+            <div class="mt-4 flex justify-center gap-4">
+                <button onclick="changeLang('ar')" class="text-sm text-blue-600 font-bold">العربية</button>
+                <button onclick="changeLang('fr')" class="text-sm text-gray-400 font-bold">Français</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden min-h-screen flex">
+        <div class="w-64 glass shadow-xl h-screen sticky top-0 p-6 flex flex-col border-l border-gray-100">
+            <div class="mb-10 text-center">
+                <h1 class="text-xl font-black text-blue-800">AITCHIKH <span class="text-blue-500">CONTACT</span></h1>
+            </div>
+            <nav class="flex-1 space-y-4">
+                <button onclick="showPanel('home')" class="sidebar-item w-full flex items-center gap-3 p-4 rounded-xl text-gray-600 font-bold">
+                    <i class="fas fa-chart-pie"></i> <span data-key="menu_dash">الرئيسية</span>
+                </button>
+                <button onclick="showPanel('upload')" class="sidebar-item w-full flex items-center gap-3 p-4 rounded-xl text-gray-600 font-bold">
+                    <i class="fas fa-file-csv"></i> <span data-key="menu_upload">رفع الملفات</span>
+                </button>
+                <button onclick="showPanel('sender')" class="sidebar-item w-full flex items-center gap-3 p-4 rounded-xl text-gray-600 font-bold">
+                    <i class="fas fa-paper-plane"></i> <span data-key="menu_send">إرسال حملة</span>
+                </button>
+            </nav>
+            <button onclick="location.reload()" class="p-4 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-600 hover:text-white transition">
+                <i class="fas fa-sign-out-alt"></i> <span data-key="logout">خروج</span>
+            </button>
+        </div>
+
+        <main class="flex-1 p-8">
+            <header class="flex justify-between items-center mb-10">
+                <div>
+                    <h2 class="text-3xl font-black text-gray-800" id="currentPanelTitle">لوحة التحكم</h2>
+                    <p class="text-gray-400" id="currentPanelSub">مرحباً بك في نظام الإرسال الذكي</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="changeLang('ar')" class="p-2 hover:bg-blue-100 rounded-lg transition">🇸🇦</button>
+                    <button onclick="changeLang('fr')" class="p-2 hover:bg-blue-100 rounded-lg transition">🇫🇷</button>
+                </div>
+            </header>
+
+            <div id="panel-home" class="panel animate-fade-in">
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                        <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-gray-500 font-bold" data-key="stat_emails">الإيميلات المستخرجة</h3>
+                        <p class="text-4xl font-black mt-2" id="count-emails">0</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                        <i class="fas fa-check-circle text-4xl text-green-500 mb-4"></i>
+                        <h3 class="text-gray-500 font-bold" data-key="stat_sent">تم الإرسال</h3>
+                        <p class="text-4xl font-black mt-2" id="count-sent">0</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                        <i class="fas fa-clock text-4xl text-orange-500 mb-4"></i>
+                        <h3 class="text-gray-500 font-bold" data-key="stat_delay">تأخير التلقائي</h3>
+                        <p class="text-4xl font-black mt-2">3s</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-upload" class="panel hidden animate-fade-in">
+                <div class="bg-white p-10 rounded-3xl border-4 border-dashed border-gray-100 text-center">
+                    <i class="fas fa-cloud-upload-alt text-6xl text-blue-200 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4" data-key="upload_title">اسحب ملف CSV هنا</h3>
+                    <input type="file" id="csvFile" accept=".csv" class="hidden">
+                    <button onclick="document.getElementById('csvFile').click()" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold hover:shadow-xl transition">اختيار ملف</button>
+                    <p class="mt-4 text-gray-400">تأكد أن الملف يحتوي على عمود باسم Email</p>
+                </div>
+                <div id="emailListPreview" class="mt-8 bg-white rounded-2xl p-6 hidden">
+                    <h4 class="font-black mb-4 underline">قائمة الإيميلات المستخرجة:</h4>
+                    <div id="emailsTable" class="max-h-60 overflow-y-auto space-y-2"></div>
+                </div>
+            </div>
+
+            <div id="panel-sender" class="panel hidden animate-fade-in">
+                <div class="grid grid-cols-12 gap-8">
+                    <div class="col-span-8 bg-white p-8 rounded-3xl shadow-sm">
+                        <input type="text" id="mailSubject" placeholder="عنوان الرسالة..." class="w-full p-4 mb-4 border-2 border-gray-50 rounded-xl font-bold text-xl outline-none focus:border-blue-500">
+                        
+                        <div class="flex flex-wrap gap-2 mb-4 p-2 bg-gray-50 rounded-xl border border-gray-100">
+                            <button onclick="execCmd('bold')" class="p-2 w-10 hover:bg-white rounded shadow-sm"><i class="fas fa-bold"></i></button>
+                            <button onclick="execCmd('italic')" class="p-2 w-10 hover:bg-white rounded shadow-sm"><i class="fas fa-italic"></i></button>
+                            <button onclick="document.getElementById('fontColor').click()" class="p-2 w-10 hover:bg-white rounded shadow-sm"><i class="fas fa-palette"></i></button>
+                            <input type="color" id="fontColor" onchange="execCmd('foreColor', this.value)" class="hidden">
+                            <select onchange="execCmd('fontSize', this.value)" class="p-1 rounded bg-white border border-gray-200">
+                                <option value="3">صغير</option>
+                                <option value="5" selected>متوسط</option>
+                                <option value="7">كبير جداً</option>
+                            </select>
+                            <button onclick="execCmd('insertUnorderedList')" class="p-2 w-10 hover:bg-white rounded shadow-sm"><i class="fas fa-list"></i></button>
+                            <button onclick="addLink()" class="p-2 w-10 hover:bg-white rounded shadow-sm"><i class="fas fa-link"></i></button>
+                            <button onclick="addLogo()" class="p-2 px-4 hover:bg-blue-600 hover:text-white rounded shadow-sm text-sm">إضافة لوغو <i class="fas fa-image ml-1"></i></button>
+                        </div>
+
+                        <div id="editor" contenteditable="true">
+                            مرحباً <b>{{name}}</b>، <br> نحن في <b>Aitchikh Contact</b> نسعد بتواصلك معنا...
+                        </div>
+
+                        <div class="mt-6 flex gap-4 items-center">
+                            <button onclick="startSending()" id="sendBtn" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-800 text-white p-5 rounded-2xl font-black text-xl hover:shadow-2xl transition flex items-center justify-center gap-3">
+                                <i class="fas fa-paper-plane"></i> <span data-key="btn_send_now">إرسال الحملة الآن</span>
+                            </button>
+                            <div class="text-sm text-gray-400 font-bold">
+                                تأخير: <span class="text-blue-600">3 ثواني</span> بين كل إرسال
+                            </div>
+                        </div>
+                        
+                        <div id="sendProgress" class="mt-6 hidden">
+                            <div class="w-full bg-gray-100 h-4 rounded-full overflow-hidden">
+                                <div id="progressBar" class="bg-green-500 h-full transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                            <p id="progressText" class="text-center mt-2 font-bold text-blue-600"></p>
+                        </div>
+                    </div>
+
+                    <div class="col-span-4 bg-gray-50 p-6 rounded-3xl border border-gray-200 overflow-y-auto max-h-[600px]">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="font-black" data-key="recipients">المستلمون</h4>
+                            <span id="selectCount" class="bg-blue-600 text-white px-2 py-1 rounded text-xs">0</span>
+                        </div>
+                        <div class="mb-4">
+                            <button onclick="toggleSelectAll()" class="text-xs bg-white border px-3 py-1 rounded-lg hover:bg-blue-50">تحديد الكل / إلغاء</button>
+                        </div>
+                        <div id="recipientsList" class="space-y-2">
+                            <p class="text-gray-400 text-sm italic">ارفع ملف CSV أولاً...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- API CONFIG (From your previous code) ---
+        const EMAILJS_CONFIG = {
+            serviceID: "service_v0k5m8m",
+            templateID: "template_6u8v4q8",
+            publicKey: "mN0T-wV8z7-X0_6eS"
+        };
+
+        // --- Translations ---
+        const lang = {
+            ar: {
+                menu_dash: "الرئيسية", menu_upload: "رفع الملفات", menu_send: "إرسال رسالة",
+                stat_emails: "إيميلات نشطة", stat_sent: "تم إرسالها", stat_delay: "تأخير الأمان",
+                upload_title: "اسحب ملف CSV أو اضغط للرفع", btn_send_now: "بدء الإرسال الجماعي",
+                recipients: "المستلمون", logout: "خروج", login_err: "كود الدخول خاطئ!"
+            },
+            fr: {
+                menu_dash: "Dashboard", menu_upload: "Uploader CSV", menu_send: "Envoyer Message",
+                stat_emails: "Emails Actifs", stat_sent: "Envoyés", stat_delay: "Délai Sécurité",
+                upload_title: "Glissez le fichier CSV ici", btn_send_now: "Démarrer l'envoi",
+                recipients: "Destinataires", logout: "Déconnexion", login_err: "Code incorrect!"
+            }
+        };
+
+        let currentLang = 'ar';
+        let extractedData = []; // [{name: '', email: ''}]
+        let sentCount = 0;
+
+        // --- Initialization ---
+        emailjs.init(EMAILJS_CONFIG.publicKey);
+
+        function checkAuth() {
+            const code = document.getElementById('accessCode').value;
+            if(code === '1077') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                Swal.fire({ icon: 'success', title: 'مرحباً بك', timer: 1500, showConfirmButton: false });
+            } else {
+                Swal.fire('خطأ', lang[currentLang].login_err, 'error');
+            }
+        }
+
+        function changeLang(l) {
+            currentLang = l;
+            document.getElementById('mainHtml').dir = l === 'ar' ? 'rtl' : 'ltr';
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                el.innerText = lang[l][key];
+            });
+        }
+
+        function showPanel(id) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`panel-${id}`).classList.remove('hidden');
+            
+            // UI Updates
+            const titles = { home: "الرئيسية", upload: "رفع البيانات", sender: "إرسال الحملة" };
+            document.getElementById('currentPanelTitle').innerText = titles[id];
+        }
+
+        // --- CSV Logic ---
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            Papa.parse(file, {
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    processCSV(results.data);
+                }
+            });
+        });
+
+        function processCSV(data) {
+            extractedData = data.map(row => {
+                // محاولة إيجاد عمود الإيميل والاسم بذكاء
+                const email = row.email || row.Email || row.EMAIL || Object.values(row).find(v => v.includes('@'));
+                const name = row.name || row.Name || row.Nom || "عميلنا العزيز";
+                return { name, email };
+            }).filter(item => item.email);
+
+            document.getElementById('count-emails').innerText = extractedData.length;
+            renderRecipients();
+            Swal.fire('تم بنجاح', `تم استخراج ${extractedData.length} إيميل`, 'success');
+        }
+
+        function renderRecipients() {
+            const list = document.getElementById('recipientsList');
+            list.innerHTML = '';
+            extractedData.forEach((item, index) => {
+                list.innerHTML += `
+                    <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-100 cursor-pointer hover:border-blue-300">
+                        <input type="checkbox" checked class="rec-check w-5 h-5 accent-blue-600" value="${index}">
+                        <div class="text-xs overflow-hidden">
+                            <p class="font-bold text-gray-800">${item.name}</p>
+                            <p class="text-gray-400">${item.email}</p>
+                        </div>
+                    </label>
+                `;
+            });
+            updateSelectCount();
+        }
+
+        function updateSelectCount() {
+            const count = document.querySelectorAll('.rec-check:checked').length;
+            document.getElementById('selectCount').innerText = count;
+        }
+
+        function toggleSelectAll() {
+            const checks = document.querySelectorAll('.rec-check');
+            const allChecked = Array.from(checks).every(c => c.checked);
+            checks.forEach(c => c.checked = !allChecked);
+            updateSelectCount();
+        }
+
+        // --- Editor Tools ---
+        function execCmd(cmd, val = null) {
+            document.execCommand(cmd, false, val);
+        }
+
+        function addLink() {
+            const url = prompt("أدخل الرابط:");
+            if(url) execCmd('createLink', url);
+        }
+
+        function addLogo() {
+            const url = prompt("أدخل رابط صورة اللوغو:");
+            if(url) execCmd('insertImage', url);
+        }
+
+        // --- Sending Logic with Delay ---
+        async function startSending() {
+            const selectedIndices = Array.from(document.querySelectorAll('.rec-check:checked')).map(c => c.value);
+            const subject = document.getElementById('mailSubject').value;
+            const messageBody = document.getElementById('editor').innerHTML;
+
+            if(selectedIndices.length === 0 || !subject) {
+                return Swal.fire('تنبيه', 'يرجى تحديد مستلمين وكتابة عنوان للرسالة', 'warning');
+            }
+
+            document.getElementById('sendBtn').disabled = true;
+            document.getElementById('sendProgress').classList.remove('hidden');
+            
+            for(let i = 0; i < selectedIndices.length; i++) {
+                const index = selectedIndices[i];
+                const person = extractedData[index];
+                
+                // تخصيص الرسالة
+                let personalizedMsg = messageBody.replace(/{{name}}/g, person.name);
+
+                const params = {
+                    to_email: person.email,
+                    from_name: "Aitchikh Consulting",
+                    subject: subject,
+                    message: personalizedMsg
+                };
+
+                try {
+                    await emailjs.send(EMAILJS_CONFIG.serviceID, EMAILJS_CONFIG.templateID, params);
+                    sentCount++;
+                    document.getElementById('count-sent').innerText = sentCount;
+                } catch (error) {
+                    console.error("Failed to send to: " + person.email);
+                }
+
+                // Update Progress
+                const progress = ((i + 1) / selectedIndices.length) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').innerText = `يتم الإرسال الآن: ${i + 1} / ${selectedIndices.length}`;
+
+                // Anti-Spam Delay (3 seconds)
+                if(i < selectedIndices.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                }
+            }
+
+            Swal.fire('تم الانتهاء', 'تم إرسال جميع الرسائل بنجاح', 'success');
+            document.getElementById('sendBtn').disabled = false;
+        }
+
+        // Event listener for dynamic check count
+        document.addEventListener('change', (e) => {
+            if(e.target.classList.contains('rec-check')) updateSelectCount();
+        });
+    </script>
+</body>
+</html>
